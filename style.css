@@ -1,69 +1,21 @@
-body {
-  margin: 20px;
-}
-
-body, button, input {
+body,
+button,
+input {
   /* Comic Sans is good, actually */
   font-family: "Comic Sans", "Comic Sans MS", "Chalkboard", "ChalkboardSE-Regular", Helvetica, "Segoe UI", "Segoe WP", sans-serif, "Segoe MDL2 Assets", "Symbols";
   font-size: 18px;
 }
 
+body {
+  margin: 20px;
+}
+
 h1 {
-  text-align: center;
-}
-ul {
-  list-style-type: none;
-}
-
-.content-container {
-  margin: 0 auto;
-  max-width: 500px;
-}
-
-.game-container {
-  display: grid;
-  grid-gap: 6px;
-  grid-template-rows: repeat(7, 1fr);
-  grid-template-columns: repeat(7, 1fr);
-  margin: 40px 0;
-  width: 500px;
-  height: 500px;
-  z-index: 1;
-}
-
-.info-container {
-  width: 500px;
-}
-
-.game-container > * {
-  background-size: 80%;
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-.game-container > *:before {
-  width: 100%;
-  height: 100%;
-  background-color: #f3f3f3;
-  content: '';
-  display: block;
-  border-radius: 6px; 
-  z-index: -1;
-  position: relative;
-}
-
-li {
-  display: flex;
-  flex-direction: row;
   align-items: center;
-  font-size: 24px;
-}
-
-h1 {
+  display: flex;
   font-size: 52px;
-  display: flex;
-  align-items: center;
   justify-content: center;
+  text-align: center;
 }
 
 h1 > .twa:first-child {
@@ -76,40 +28,63 @@ h1 > .twa:last-child {
 
 h2 {
   font-size: 40px;
-  margin-top: 0px;
+  margin-top: 0;
 }
 
-@media screen and (min-width: 1060px) {
-  
-  body {
-    margin: 20px 40px;
-  }
-  
-  .content-container {
-    max-width: unset;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-  }
-  
-  .game-container {
-    margin: 0;
-  }
-  
-  .info-container {
-    margin-left: 40px; 
-  }
+ul {
+  list-style-type: none;
 }
 
-.twa-snake.twa-egg {
-  background-image: url("https://twemoji.maxcdn.com/2/svg/1f40d.svg"), url("https://twemoji.maxcdn.com/2/svg/1f95a.svg");
+.content-container {
+  margin: 0 auto;
+  max-width: 500px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.game-container {
+  display: grid;
+  grid-gap: 6px;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(7, 1fr);
+  height: 500px;
+  width: 500px;
+  z-index: 1;
+}
+
+
+.game-container.paused::after {
+  content: '';
+  display: block;
+  background-color: rgba(256, 256, 256, 0.5);
+  width: 500px;
+  height: 500px;
+  position: absolute;
+}
+
+.game-container > * {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 80%;
+}
+
+.game-container > *::before {
+  background-color: #f3f3f3;
+  border-radius: 6px;
+  content: '';
+  display: block;
+  height: 100%;
+  position: relative;
+  width: 100%;
+  z-index: -1;
 }
 
 .message {
   max-width: 400px;
   color: black;
-  position: absolute; 
+  position: absolute;
   z-index: 1;
   font-size: 40px;
   text-align: center;
@@ -124,18 +99,17 @@ h2 {
 }
 
 .new-game-message > * {
-  margin-bottom: 200px;  
+  margin-bottom: 200px;
 }
 
 .restart-game-message > *:last-child {
   margin-bottom: 0;
 }
 
-.game-container.paused:after {
-  content: '';
-  display: block;
-  background-color: rgba(256, 256, 256, .5);
-  width: 500px;
-  height: 500px;
-  position: absolute;
+.twa-snake.twa-egg {
+  background-image: url("https://twemoji.maxcdn.com/2/svg/1f40d.svg"), url("https://twemoji.maxcdn.com/2/svg/1f95a.svg");
+}
+
+.twa-snake.twa-fire {
+  background-image: url("https://twemoji.maxcdn.com/2/svg/1f40d.svg"), url("https://twemoji.maxcdn.com/2/svg/1f525.svg");
 }

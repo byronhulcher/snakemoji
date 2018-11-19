@@ -1,0 +1,21 @@
+/* from https://rawgit.com/ellekasai/twemoji-awesome/gh-pages/twemoji-awesome.css */
+@charset "UTF-8";
+.twa {
+  display: inline-block;
+  height: 1em;
+  width: 1em;
+  margin: 0 .05em 0 .1em;
+  vertical-align: -0.1em;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 1em 1em; 
+}
+
+.twa-snake {
+  background-image: url("https://twemoji.maxcdn.com/2/svg/1f40d.svg"); }
+
+.twa-egg {
+  background-image: url("https://twemoji.maxcdn.com/2/svg/1f95a.svg"); }
+
+.twa-watermelon {
+  background-image: url("https://twemoji.maxcdn.com/2/svg/1f349.svg"); }

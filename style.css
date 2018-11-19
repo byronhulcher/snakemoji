@@ -23,8 +23,8 @@ ul {
 .game-container {
   display: grid;
   grid-gap: 6px;
-  grid-template-rows: repeat(11, 1fr);
-  grid-template-columns: repeat(11, 1fr);
+  grid-template-rows: repeat(7, 1fr);
+  grid-template-columns: repeat(7, 1fr);
   margin: 40px 0;
   width: 500px;
   height: 500px;
@@ -60,6 +60,7 @@ li {
 }
 
 h1 {
+  font-size: 52px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -73,8 +74,9 @@ h1 > .twa:last-child {
   margin-left: 10px;
 }
 
-h3 {
-  margin-top: 0;
+h2 {
+  font-size: 40px;
+  margin-top: 0px;
 }
 
 @media screen and (min-width: 1060px) {
@@ -98,4 +100,42 @@ h3 {
   .info-container {
     margin-left: 40px; 
   }
+}
+
+.twa-snake.twa-egg {
+  background-image: url("https://twemoji.maxcdn.com/2/svg/1f40d.svg"), url("https://twemoji.maxcdn.com/2/svg/1f95a.svg");
+}
+
+.message {
+  max-width: 400px;
+  color: black;
+  position: absolute; 
+  z-index: 1;
+  font-size: 40px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 500px;
+}
+
+.message.hidden {
+  display: none;
+}
+
+.new-game-message > * {
+  margin-bottom: 200px;  
+}
+
+.restart-game-message > *:last-child {
+  margin-bottom: 0;
+}
+
+.game-container.paused:after {
+  content: '';
+  display: block;
+  background-color: rgba(256, 256, 256, .5);
+  width: 500px;
+  height: 500px;
+  position: absolute;
 }

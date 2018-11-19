@@ -1,7 +1,10 @@
-const rowColumnCount = 11;
+const rowColumnCount = 7;
 const rowColumnCenter = Math.floor(rowColumnCount / 2.0);
 const gameContainerEl = document.querySelector('.game-container');
-const tickMilliseconds = 800;
+const newGameMessageEl = document.querySelector('.new-game-message');
+const restartGameMessageEl = document.querySelector('.restart-game-message');
+const scoreEl = document.querySelector('.score');
+const tickMilliseconds = 600;
 const keyCodesToDirections = {
   '38': 'up',
   '40': 'down',
@@ -10,12 +13,14 @@ const keyCodesToDirections = {
 };
 
 let activeGame = false,
-    gameOver = false,
-    playerPositions = {},
+    eggPositions = {},
     fruitPositions = {},
     firePositions = {},
-    player,
+    playerPosition,
+    contact = false,
+    eggs,
     playerDirection,
+    lastPlayerDirection,
     interval;
 
 function clearGame() {
@@ -33,29 +38,26 @@ function clearGame() {
 
 function addFruit() {
   let fruitPosition = generateRandomPosition()
-  while (playerPositions[fruitPosition]) {
+  while (fruitPosition === playerPosition || eggPositions[fruitPosition]) {
     fruitPosition = generateRandomPosition();
   }
 
   fruitPositions[fruitPosition] = 'watermelon';
 }
 
-function updatePlayerPositions() {
-  playerPositions = {};
+function updateEggPositions() {
+  eggPositions = {};
   
-  for (let playerIndex = player.length - 1; playerIndex >= 0 ; playerIndex++) {
-    let position = player[playerIndex];
-    playerPositions[position] = playerIndex === 0  ? 'snake' : 'egg'; 
-  } 
+  for (let eggIndex = eggs.length - 1; eggIndex >= 0 ; eggIndex--) {
+    let position = eggs[eggIndex];
+    eggPositions[position] = 'egg';
+  }
 }
 
 function initializePlayer() {
-  
-  player = [
-    twoDtoOneD(rowColumnCenter, rowColumnCenter),
-  ];
-  
-  updatePlayerPositions();
+  playerPosition = twoDtoOneD(rowColumnCenter, rowColumnCenter)
+  eggs = [];
+  updateEggPositions();
 }
 
 function initializeFruit() {
@@ -73,10 +75,18 @@ function drawIcons(positions) {
   }
 }
 
+function endGame() {
+  playerDirection = undefined;
+  lastPlayerDirection = undefined;
+  clearInterval(interval);
+  scoreEl.innerHTML = eggs.length;
+  gameContainerEl.classList.add('paused');
+  restartGameMessageEl.classList.remove('hidden');
+  setTimeout(() => {activeGame = false;}, 500);
+}
+
 function updateGame() {
-  console.log("tick");  
-  
-  const playerPosition2D = oneDtoTwoD(player[0]);
+  const playerPosition2D = oneDtoTwoD(playerPosition);
   
   let playerRow = playerPosition2D.row;
   let playerColumn = playerPosition2D.column;
@@ -100,36 +110,47 @@ function updateGame() {
   }
   
   if (playerRow < 0 || playerRow === rowColumnCount || playerColumn < 0 || playerColumn === rowColumnCount) {
-    activeGame = false;
-    gameOver = true; 
+    endGame();
   } else {
     newPlayerPosition = twoDtoOneD(playerRow, playerColumn);
     
     if (fruitPositions[newPlayerPosition]) {
       delete fruitPositions[newPlayerPosition];
-      player = [newPlayerPosition, ...player];
+      
+      eggs = [playerPosition, ...eggs];
+      updateEggPositions();
+      
       addFruit();
+      
+      clearInterval(interval);
+      interval = setInterval(onTick, Math.max(tickMilliseconds - (eggs.length * 10), 200));
     } else {
-      player = [newPlayerPosition, ...player].slice(0, -1);
+      eggs = [playerPosition, ...eggs].slice(0, -1);
+      updateEggPositions();
     }
     
-    updatePlayerPositions();
+    playerPosition = newPlayerPosition;
+    lastPlayerDirection = playerDirection;
+    
+    if (eggPositions[playerPosition]){
+      endGame();
+    }
   }
   
-  if (gameOver) {
-    clearInterval(interval);
-  }
 }
 
 function drawGame() {
   removeClasses(gameContainerEl, 'active');
-  drawIcons(playerPositions);
+  drawIcon(playerPosition, 'snake');
+  drawIcons(eggPositions);
   drawIcons(fruitPositions);
 }
 
 function newGame() {
   activeGame = true;
-  gameOver = false;
+  newGameMessageEl.classList.add('hidden');
+  restartGameMessageEl.classList.add('hidden');
+  gameContainerEl.classList.remove('paused');
   clearGame();
   initializePlayer();
   initializeFruit();
@@ -140,6 +161,31 @@ function newGame() {
 function onTick() {
   updateGame();
   drawGame();
+}
+
+function checkKeyForDirection(e) {
+  let direction;
+  
+  e = e || window.event;
+  
+  direction = keyCodesToDirections[e.keyCode];
+  
+  if (direction) {
+    if (eggs.length === 0
+        || (
+          !(lastPlayerDirection === 'up' && direction === 'down') 
+          && !(lastPlayerDirection === 'down' && direction === 'up') 
+          && !(lastPlayerDirection === 'left' && direction === 'right') 
+          && !(playerDirection === 'right' && direction === 'left')
+        )
+    ){
+      playerDirection = direction;
+    }
+    
+    if (!activeGame){
+      newGame();
+    }
+  }
 }
 
 function main() {
@@ -179,19 +225,3 @@ function removeClasses(container = document, className) {
 
 
 main();
-
-function checkKeyForDirection(e) {
-  let direction;
-  
-  e = e || window.event;
-  
-  direction = keyCodesToDirections[e.keyCode];
-  
-  if (direction) {
-    playerDirection = direction;
-    
-    if (!activeGame){
-      newGame();
-    }
-  }
-}

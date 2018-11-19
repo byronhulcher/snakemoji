@@ -6,7 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=540, minimal-ui">
     <link rel="stylesheet" href="/style.css">
-<!--     <script src="//twemoji.maxcdn.com/2/twemoji.min.js?11.2"></script> -->
     <link href="https://rawgit.com/ellekasai/twemoji-awesome/gh-pages/twemoji-awesome.css" rel="stylesheet">
     <script src="/script.js" defer></script>
   </head>  
@@ -14,32 +13,22 @@
     <div class="center-column">
       <h1><span class="twa twa-snake"></span> Snakemoji <span class="twa twa-snake"></span></h1>
       <div class="content-container">
-        <div class="game-container">
+        <div class="game-container paused">
         </div>
-        <!--
-        <div class="info-container">
-          <h3>
-            Instructions
-          </h3>
-          <p>
-            Collect fruit for points!  Everytime you collect a piece of fruit, an egg will drop behind you and follow. Running out of the grass, into fire, or into one of your eggs will end the game
-            <ul>
-              <li><span class="twa twa-snake"></span><span>: You</span></li>
-              <li><span class="twa twa-green-apple"></span><span>: 1 pt</span></li>
-              <li><span class="twa twa-lemon"></span><span>: 3 pts</span></li>
-              <li><span class="twa twa-watermelon"></span><span>: 5 pts</span></li>
-              <li><span class="twa twa-egg"></span><span>: Game over!</span></li>
-              <li><span class="twa twa-fire"></span><span>: Game over!</span></li>
-            </ul>
-          </p>
+        <div class="message new-game-message">
           <h2>
-            Controls
+            Press an arrow key to start!
           </h2>
-          <p>
-            Hit 'Enter/Return' to start, then use the arrow keys or WASD to control your little snake friend.
-          </p>
         </div>
-        -->
+        <div class="message restart-game-message hidden">
+          <h2>GAME OVER</h2>
+          <h2>
+            Your score: <span class="score">0</span>
+          </h2>
+          <h2>
+            Press an arrow key to restart!
+          </h2>
+        </div>
       </div>
     </div>
     <!-- include the Glitch button to show what the webpage is about and

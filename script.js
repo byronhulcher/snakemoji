@@ -131,7 +131,7 @@
   function addFruit () {
     let fruitPosition = generateRandomPosition()
 
-    while (fruitPosition === playerPosition || eggPositions[fruitPosition] || firePositions[fruitPosition]) {
+    while (fruitPosition === playerPosition || eggPositions[fruitPosition] || fruitPositions[fruitPosition] || firePositions[fruitPosition]) {
       fruitPosition = generateRandomPosition()
     }
 
@@ -202,7 +202,7 @@
   function addFire () {
     let firePosition = generateRandomPosition()
 
-    while (firePosition === playerPosition || eggPositions[firePosition] || firePositions[firePosition]) {
+    while (firePosition === playerPosition || eggPositions[firePosition] || fruitPositions[firePosition] || firePositions[firePosition]) {
       firePosition = generateRandomPosition()
     }
 
@@ -222,7 +222,7 @@
     setTimeout(() => { activeGame = false }, 500)
   }
 
-  /* ---Utility functions---  */
+  /* --- Utility functions ---  */
   function twoDtoOneD (row, column) {
     return row * rowColumnCount + column
   }
@@ -238,7 +238,7 @@
     return Math.floor(Math.random() * Math.pow(rowColumnCount, 2))
   }
 
-  // from https://clubmate.fi/remove-a-class-name-from-multiple-elements-with-pure-javascript/
+  // adapted from https://clubmate.fi/remove-a-class-name-from-multiple-elements-with-pure-javascript/
   function removeClasses (container = document, className) {
     let els = container.getElementsByClassName(className)
 
